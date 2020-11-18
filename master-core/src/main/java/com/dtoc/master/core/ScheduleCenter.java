@@ -22,18 +22,18 @@ public class ScheduleCenter {
 
     public void check(){
         synchronized (MasterCore.lock){
-            if (MasterCore.getContextInstance().done){
+            if (MasterCore.getContextInstance().isDone()){
                 return;
             }
             boolean allFinish = true;
-            ListIterator it = MasterCore.getContextInstance().taskList.listIterator();
+            ListIterator it = MasterCore.getContextInstance().getTaskList().listIterator();
             while (it.hasNext()){
                 Task task = (Task) it.next();
                 if (task.getStatus() == TaskStatus.TASK_STATUS_READY.getStatus()){
                     allFinish = false;
                     Instance instance = taskFacade.getTask(it.nextIndex());
-                    MasterCore.getContextInstance().instanceQueue.offer(instance);
-                    MasterCore.getContextInstance().taskList.
+                    MasterCore.getContextInstance().getInstanceQueue().offer(instance);
+                    MasterCore.getContextInstance().getTaskList().
                             get(it.nextIndex()).setStatus(TaskStatus.TASK_STATUS_QUEUE.getStatus());
                 }else if (task.getStatus() == TaskStatus.TASK_STATUS_QUEUE.getStatus()){
                     allFinish = false;
@@ -42,24 +42,24 @@ public class ScheduleCenter {
                     Date curTime = new Date();
                     Long subTime = curTime.getTime() - task.getStartTime().getTime();
                     if (subTime >= maxWaitTime){
-                        MasterCore.getContextInstance().taskList.
+                        MasterCore.getContextInstance().getTaskList().
                                 get(it.nextIndex()).setStatus(TaskStatus.TASK_STATUS_QUEUE.getStatus());
                         Instance instance = taskFacade.getTask(it.nextIndex());
-                        MasterCore.getContextInstance().instanceQueue.offer(instance);
+                        MasterCore.getContextInstance().getInstanceQueue().offer(instance);
                     }
                 }else if (task.getStatus() == TaskStatus.TASK_STATUS_ERR.getStatus()){
                     allFinish = false;
                     Instance instance = taskFacade.getTask(it.nextIndex());
-                    MasterCore.getContextInstance().instanceQueue.offer(instance);
-                    MasterCore.getContextInstance().taskList.
+                    MasterCore.getContextInstance().getInstanceQueue().offer(instance);
+                    MasterCore.getContextInstance().getTaskList().
                             get(it.nextIndex()).setStatus(TaskStatus.TASK_STATUS_QUEUE.getStatus());
                 }
             }
             if (allFinish){
-                if (MasterCore.getContextInstance().taskPhase == TaskPhase.MAP_PHASE){
+                if (MasterCore.getContextInstance().getTaskPhase() == TaskPhase.MAP_PHASE){
                     MasterCore.initReduceTask();
                 }else{
-                    MasterCore.getContextInstance().done = true;
+                    MasterCore.getContextInstance().setDone(true);
                 }
             }
         }

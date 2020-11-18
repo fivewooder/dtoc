@@ -7,6 +7,6 @@ import java.util.Date;
 @Data
 public class Task {
     int status;
-    Long workId;
+    int workId;
     Date startTime;
 }

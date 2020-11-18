@@ -1,7 +1,9 @@
 package com.dtoc.master.service;
 
 import com.dtoc.master.client.param.*;
+import net.devh.boot.grpc.server.service.GrpcService;
 
+@GrpcService
 public interface MasterService {
 
     /**

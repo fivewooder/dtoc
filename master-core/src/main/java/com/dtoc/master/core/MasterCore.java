@@ -11,37 +11,37 @@ public class MasterCore {
     /**
      * File List On Disk
      */
-    List<String> filelist;
+    private List<String> filelist;
 
     /**
      * Machine List
      */
-    List<Task> taskList;
+    private List<Task> taskList;
 
     /**
      * Number of Reduce Task
      */
-    int nReduce;
+    private int nReduce;
 
     /**
      * Type of work
      */
-    TaskPhase taskPhase;
+    private TaskPhase taskPhase;
 
     /**
      * All Task Finished
      */
-    boolean done;
+    private boolean done;
 
     /**
      * Identity of Machine
      */
-    int workerSeq;
+    public static int workerSeq;
 
     /**
      * Task Queue
      */
-    Queue<Instance> instanceQueue;
+    private Queue<Instance> instanceQueue;
 
     /**
      * Global Lock
@@ -64,4 +64,51 @@ public class MasterCore {
         getContextInstance().taskPhase = TaskPhase.REDUCE_PHASE;
     }
 
+    public List<String> getFilelist() {
+        return filelist;
+    }
+
+    public void setFilelist(List<String> filelist) {
+        this.filelist = filelist;
+    }
+
+    public List<Task> getTaskList() {
+        return taskList;
+    }
+
+    public void setTaskList(List<Task> taskList) {
+        this.taskList = taskList;
+    }
+
+    public int getnReduce() {
+        return nReduce;
+    }
+
+    public void setnReduce(int nReduce) {
+        this.nReduce = nReduce;
+    }
+
+    public TaskPhase getTaskPhase() {
+        return taskPhase;
+    }
+
+    public void setTaskPhase(TaskPhase taskPhase) {
+        this.taskPhase = taskPhase;
+    }
+
+    public boolean isDone() {
+        return done;
+    }
+
+    public void setDone(boolean done) {
+        this.done = done;
+    }
+
+    public Queue<Instance> getInstanceQueue() {
+        return instanceQueue;
+    }
+
+    public void setInstanceQueue(Queue<Instance> instanceQueue) {
+        this.instanceQueue = instanceQueue;
+    }
 }

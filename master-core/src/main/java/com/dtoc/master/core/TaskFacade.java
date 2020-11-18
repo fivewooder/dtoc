@@ -12,13 +12,13 @@ import org.springframework.stereotype.Component;
 public class TaskFacade {
     public Instance getTask(int seq){
         Instance instance = new Instance();
-        instance.setNMap(MasterCore.getContextInstance().filelist.size());
-        instance.setNReduce(MasterCore.getContextInstance().nReduce);
+        instance.setNMap(MasterCore.getContextInstance().getFilelist().size());
+        instance.setNReduce(MasterCore.getContextInstance().getnReduce());
         instance.setSeq(seq);
-        instance.setTaskPhase(MasterCore.getContextInstance().taskPhase);
+        instance.setTaskPhase(MasterCore.getContextInstance().getTaskPhase());
         instance.setAlive(true);
         if (instance.getTaskPhase().getCode().equals(TaskPhase.MAP_PHASE.getCode())){
-            instance.setFileName(MasterCore.getContextInstance().filelist.get(seq));
+            instance.setFileName(MasterCore.getContextInstance().getFilelist().get(seq));
         }
         return instance;
     }

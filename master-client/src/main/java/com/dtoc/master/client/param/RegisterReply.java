@@ -1,6 +1,5 @@
 package com.dtoc.master.client.param;
 
-import com.dtoc.common.param.Task;
 import lombok.Data;
 
 /**
@@ -9,8 +8,5 @@ import lombok.Data;
  */
 @Data
 public class RegisterReply {
-    /**
-     * 任务
-     */
-    Task task;
+    int workerSeq;
 }
